@@ -1,4 +1,6 @@
 import pygame
+
+import sprites
 from game.constants import *
 
 def mainloop() -> None:
