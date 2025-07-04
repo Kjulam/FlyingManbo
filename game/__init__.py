@@ -1,5 +1,4 @@
 import pygame
-
 import sprites
 from game.constants import *
 
