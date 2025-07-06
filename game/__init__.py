@@ -1,6 +1,7 @@
 import os
 import pygame
 import logging
+from typing import Any
 from game.sprites import *
 from game.constants import *
 
@@ -15,6 +16,7 @@ def mainloop() -> None:
     frame_counter: int = 0
     # ----- 音效 ----- #
     steel_tube_thud_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "steel_tube_thud.wav"))
+    played_steel_tube_thud_sound: bool = False
 
     # ---------- 设置窗口标题和图标 ---------- #
     pygame.display.set_caption(TITLE)
@@ -24,12 +26,14 @@ def mainloop() -> None:
 
     # ---------- 角色相关 ---------- #
     all_sprites: pygame.sprite.Group = pygame.sprite.Group()
+    players: pygame.sprite.Group = pygame.sprite.Group()
     pillars: pygame.sprite.Group = pygame.sprite.Group()
 
     player: Player = Player()
     logging.debug("生成了新的 Player 对象")
 
     all_sprites.add(player)
+    players.add(player)
 
     # --------------- 真·主循环 --------------- #
     while running:
@@ -58,6 +62,24 @@ def mainloop() -> None:
             all_sprites.add(lower_pillar)
             pillars.add(upper_pillar)
             pillars.add(lower_pillar)
+
+        # ---------- 角色的碰撞 ---------- #
+        player_and_pillars_collided: dict[Any, list] = pygame.sprite.groupcollide(
+            players,
+            pillars,
+            False,
+            False,
+            collided=pygame.sprite.collide_mask
+        )
+
+        if player_and_pillars_collided:
+            logging.debug("检测到玩家与柱子相撞")
+            if not played_steel_tube_thud_sound:
+                steel_tube_thud_sound.play()
+                played_steel_tube_thud_sound = True
+
+        else:
+            played_steel_tube_thud_sound = False
 
         # ---------- 游戏窗口更新 ---------- #
         frame_counter += 1

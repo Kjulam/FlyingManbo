@@ -5,11 +5,9 @@ import game
 class Player(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
-        player_image: pygame.Surface = pygame.transform.scale(                    # 将图片设置大小为 (50, 25)
-            pygame.image.load(os.path.join("assets/image", "player.png")),
-            (50, 50)
-        )
-        self.image: pygame.Surface = player_image
+        player_image: pygame.Surface = pygame.image.load(os.path.join("assets/image", "player.png")).convert_alpha()
+        self.image: pygame.Surface = pygame.transform.scale(player_image, (50, 50))                                 # 将图片设置大小为 (50, 50)
+        self.mask: pygame.Mask = pygame.mask.from_surface(self.image)
         self.rect: pygame.Rect = self.image.get_rect()
         self.rect.center = (100, game.HEIGHT // 2)
         self.speed: int = 3
