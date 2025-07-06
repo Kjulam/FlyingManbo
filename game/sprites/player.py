@@ -14,7 +14,8 @@ class Player(pygame.sprite.Sprite):
 
     def update(self) -> None:
         mouse_pressed: tuple = pygame.mouse.get_pressed()
-        if mouse_pressed[0]:
+        key_pressed: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
+        if mouse_pressed[0] or key_pressed[pygame.K_SPACE]:
             self.rect.y -= self.speed
         else:
             self.rect.y += self.speed
