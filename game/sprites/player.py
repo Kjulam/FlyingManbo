@@ -1,11 +1,14 @@
+import os
 import pygame
 import game
 
 class Player(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
-        self.image: pygame.Surface = pygame.Surface((50, 30))
-        self.image.fill(game.GREEN)
+        self.image: pygame.Surface = pygame.transform.scale(
+            pygame.image.load(os.path.join("assets/image", "player.png")),
+            (50, 25)
+        )
         self.rect: pygame.Rect = self.image.get_rect()
         self.rect.center = (100, game.HEIGHT // 2)
         self.speed: int = 3

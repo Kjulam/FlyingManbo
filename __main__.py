@@ -8,7 +8,7 @@ def main() -> int:
         logging.basicConfig(
             level=logging.INFO,
             format="[%(asctime)s] [%(filename)s / %(levelname)s]: %(message)s",
-            datefmt="%I:%M:%S"
+            datefmt="%H:%M:%S"
         )
 
         pygame.init()
