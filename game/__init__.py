@@ -20,11 +20,11 @@ def mainloop() -> None:
 
     all_sprites.add(player)
 
-    logging.debug(f"成功设置帧率为 {FPS} 帧 / 秒")
-    logging.debug(f"成功填充窗口背景颜色为 {BACKGROUND_COLOR}")
     while running:
-        window.fill(BACKGROUND_COLOR)
+        window.fill(BLACK)
+        logging.debug(f"成功填充窗口背景颜色")
         clock.tick(FPS)
+        logging.debug(f"成功设置帧率")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 logging.debug("检测到游戏事件：pygame.QUIT")

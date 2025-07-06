@@ -1,3 +1,5 @@
+import os.path
+
 import pygame
 import random
 import game
@@ -5,8 +7,13 @@ import game
 class UpperPillar(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
-        self.image: pygame.Surface = pygame.Surface((50, game.HEIGHT // 2 + 50))
-        self.image.fill(game.BLUE)
+        self.image: pygame.Surface = pygame.transform.scale(
+            pygame.transform.rotate(pygame.image.load(
+                os.path.join("assets/image", "steel_tube.png")),
+                180
+            ),
+            (50, game.HEIGHT // 2 + 50)
+        )
         self.rect: pygame.Rect = self.image.get_rect()
         self.rect.bottom = random.randint(50, game.HEIGHT // 2 + 50)
         self.rect.left = game.WIDTH
