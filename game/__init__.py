@@ -26,6 +26,8 @@ def mainloop() -> None:
     steel_tube_thud_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "steel_tube_thud.wav"))
     played_steel_tube_thud_sound: bool = False
 
+    squeaky_toy: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "squeaky_toy.wav"))
+
     # ----- 字体 ----- #
     noto_sans_sc_black: pygame.font.Font = pygame.font.Font(os.path.join("assets/font", "NotoSansSC-Black.ttf"), 36)
     score_surface: pygame.Surface = noto_sans_sc_black.render(f"分数：{score}", True, WHITE)
@@ -117,6 +119,7 @@ def mainloop() -> None:
             if can_add_score:
                 score += 1
                 can_add_score = False
+                squeaky_toy.play()
         else:
             can_add_score = True
 
