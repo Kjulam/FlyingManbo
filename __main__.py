@@ -12,6 +12,7 @@ def main() -> int:
         )
 
         pygame.init()
+        pygame.mixer.init()
         logging.info("Pygame 初始化成功")
         game.mainloop()
         pygame.quit()

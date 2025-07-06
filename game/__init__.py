@@ -1,17 +1,28 @@
+import os
 import pygame
 import logging
 from game.sprites import *
 from game.constants import *
 
 def mainloop() -> None:
+    # --------------- 初始化 --------------- #
+    # ---------- 变量初始化 ---------- #
+    # ----- 窗口相关变量 ----- #
     running: bool = True
     window: pygame.Surface = pygame.display.set_mode((WIDTH, HEIGHT))
     logging.debug("成功创建游戏窗口")
     clock: pygame.time.Clock = pygame.time.Clock()
+    frame_counter: int = 0
+    # ----- 音效 ----- #
+    steel_tube_thud_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "steel_tube_thud.wav"))
+
+    # ---------- 设置窗口标题和图标 ---------- #
     pygame.display.set_caption(TITLE)
     logging.debug(f"成功设置窗口标题为 \"{TITLE}\"")
-    frame_counter: int = 0
+    pygame.display.set_icon(ICON)
+    logging.debug("成功设置窗口图标")
 
+    # ---------- 角色相关 ---------- #
     all_sprites: pygame.sprite.Group = pygame.sprite.Group()
     pillars: pygame.sprite.Group = pygame.sprite.Group()
 
@@ -20,6 +31,7 @@ def mainloop() -> None:
 
     all_sprites.add(player)
 
+    # --------------- 真·主循环 --------------- #
     while running:
         window.fill(BLACK)
         logging.debug(f"成功填充窗口背景颜色")
@@ -36,6 +48,7 @@ def mainloop() -> None:
                     logging.debug("按下的键是：Escape")
                     running = False
 
+        # ---------- 柱子的生成 ---------- #
         if frame_counter % (FPS * 2) == 0:
             upper_pillar: UpperPillar = UpperPillar()
             logging.debug("生成了新的 UpperPillar 对象")
@@ -46,6 +59,7 @@ def mainloop() -> None:
             pillars.add(upper_pillar)
             pillars.add(lower_pillar)
 
+        # ---------- 游戏窗口更新 ---------- #
         frame_counter += 1
         all_sprites.draw(window)
         logging.debug("成功将所有角色绘制到屏幕上")

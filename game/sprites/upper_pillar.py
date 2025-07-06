@@ -1,5 +1,4 @@
-import os.path
-
+import os
 import pygame
 import random
 import game
@@ -7,11 +6,10 @@ import game
 class UpperPillar(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
+        pillar_image: pygame.Surface = pygame.image.load(os.path.join("assets/image", "steel_tube.png"))
+        rotated_pillar_image: pygame.Surface = pygame.transform.rotate(pillar_image, 180)           # 将图片旋转 180 度，即上下颠倒
         self.image: pygame.Surface = pygame.transform.scale(
-            pygame.transform.rotate(pygame.image.load(
-                os.path.join("assets/image", "steel_tube.png")),
-                180
-            ),
+            rotated_pillar_image,
             (50, game.HEIGHT // 2 + 50)
         )
         self.rect: pygame.Rect = self.image.get_rect()

@@ -5,8 +5,9 @@ import game
 class LowerPillar(pygame.sprite.Sprite):
     def __init__(self, bottom_of_corresponding_upper_pillar: int) -> None:
         super().__init__()
+        pillar_image: pygame.Surface = pygame.image.load(os.path.join("assets/image", "steel_tube.png"))
         self.image: pygame.Surface = pygame.transform.scale(
-            pygame.image.load(os.path.join("assets/image", "steel_tube.png")),
+            pillar_image,
             (50, game.HEIGHT // 2 + 50)
         )
         self.rect: pygame.Rect = self.image.get_rect()
