@@ -14,6 +14,12 @@ def mainloop() -> None:
     logging.debug("成功创建游戏窗口")
     clock: pygame.time.Clock = pygame.time.Clock()
     frame_counter: int = 0
+    game_over: bool = False
+
+    # ----- 图片 ----- #
+    icon: pygame.Surface = pygame.image.load(os.path.join("assets/image", "icon.ico"))
+    game_over_image: pygame.Surface = pygame.image.load(os.path.join("assets/image", "game_over.png"))
+
     # ----- 音效 ----- #
     steel_tube_thud_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "steel_tube_thud.wav"))
     played_steel_tube_thud_sound: bool = False
@@ -21,7 +27,7 @@ def mainloop() -> None:
     # ---------- 设置窗口标题和图标 ---------- #
     pygame.display.set_caption(TITLE)
     logging.debug(f"成功设置窗口标题为 \"{TITLE}\"")
-    pygame.display.set_icon(ICON)
+    pygame.display.set_icon(icon)
     logging.debug("成功设置窗口图标")
 
     # ---------- 角色相关 ---------- #
@@ -77,14 +83,17 @@ def mainloop() -> None:
             if not played_steel_tube_thud_sound:
                 steel_tube_thud_sound.play()
                 played_steel_tube_thud_sound = True
-
+            window.blit(game_over_image, (35, 150))
+            pygame.display.update()
+            game_over = True
         else:
             played_steel_tube_thud_sound = False
 
         # ---------- 游戏窗口更新 ---------- #
-        frame_counter += 1
-        all_sprites.draw(window)
-        logging.debug("成功将所有角色绘制到屏幕上")
-        all_sprites.update()
-        pygame.display.update()
-        logging.debug("成功更新窗口")
+        if not game_over:
+            frame_counter += 1
+            all_sprites.draw(window)
+            logging.debug("成功将所有角色绘制到屏幕上")
+            all_sprites.update()
+            pygame.display.update()
+            logging.debug("成功更新窗口")

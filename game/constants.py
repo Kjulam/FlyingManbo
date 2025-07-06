@@ -12,4 +12,3 @@ WIDTH: int = 800
 HEIGHT: int = 600
 FPS: int = 60
 TITLE: str = "飞翔的小鸟"
-ICON: pygame.Surface = pygame.image.load(os.path.join("assets/image", "icon.ico"))
