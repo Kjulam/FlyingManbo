@@ -19,6 +19,8 @@ def mainloop(no_music: bool) -> None:
     score: int = 0
     can_add_score: bool = True
     game_over: bool = False
+    temp: bool = True
+    logging.info(f"当前分数：{score}")
 
     # ----- 图片 ----- #
     icon: pygame.Surface = pygame.image.load(os.path.join("assets/image", "manbo.png"))
@@ -59,7 +61,6 @@ def mainloop(no_music: bool) -> None:
     all_sprites.add(score_keeper)
     players.add(player)
     score_keepers.add(score_keeper)
-
 
     # --------------- 真·主循环 --------------- #
     while running:
@@ -116,6 +117,7 @@ def mainloop(no_music: bool) -> None:
             False
         )
 
+        # ---------- 失败判定 ---------- #
         if player_and_pillars_collided:
             logging.debug("检测到玩家与柱子相撞")
             if not played_steel_tube_thud_sound:
@@ -127,16 +129,23 @@ def mainloop(no_music: bool) -> None:
         else:
             played_steel_tube_thud_sound = False
 
+        # ---------- 计分判定 ---------- #
         if score_keeper_and_pillars_collided:
             if can_add_score:
                 score += 1
+                logging.info(f"当前分数：{score}")
                 can_add_score = False
                 manbo_sound.play()
         else:
             can_add_score = True
 
         # ---------- 游戏窗口更新 ---------- #
-        if not game_over:
+        if game_over:
+            if temp:
+                logging.info("你撞大运喽！游戏失败")
+                logging.info(f"最终得分：{score}")
+                temp = False
+        else:
             frame_counter += 1
             score_surface = noto_sans_sc_black.render(f"分数：{score}", True, WHITE)
             all_sprites.draw(window)
@@ -144,3 +153,4 @@ def mainloop(no_music: bool) -> None:
             all_sprites.update()
             pygame.display.update()
             logging.debug("成功更新窗口")
+
