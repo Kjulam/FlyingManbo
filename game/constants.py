@@ -11,4 +11,4 @@ BLUE: str = "#0000FF"
 WIDTH: int = 800
 HEIGHT: int = 600
 FPS: int = 60
-TITLE: str = "飞翔的小鸟"
+TITLE: str = "飞翔的曼波"
