@@ -1,3 +1,5 @@
+__author__: str = "Kjulam"
+
 import sys
 import pygame
 import logging

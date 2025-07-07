@@ -1,5 +1,4 @@
-import os
-import pygame
+__author__: str = "Kjulam"
 
 # 颜色常量
 BLACK: str = "#000000"

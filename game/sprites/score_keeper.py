@@ -1,3 +1,5 @@
+__author__: str = "Kjulam"
+
 import pygame
 
 class ScoreKeeper(pygame.sprite.Sprite):
