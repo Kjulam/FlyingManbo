@@ -1,6 +1,7 @@
 import sys
 import pygame
 import logging
+import argparse
 import game
 
 def main() -> int:
@@ -11,10 +12,15 @@ def main() -> int:
             datefmt="%H:%M:%S"
         )
 
+        parser: argparse.ArgumentParser = argparse.ArgumentParser()
+        parser.add_argument("-nm", "--no-music", help="关闭音乐运行", action="store_true")
+        args: argparse.Namespace = parser.parse_args()
+        no_music: bool = args.no_music
+
         pygame.init()
         pygame.mixer.init()
         logging.info("Pygame 初始化成功")
-        game.mainloop()
+        game.mainloop(no_music)
         pygame.quit()
 
     except KeyboardInterrupt:

@@ -5,7 +5,7 @@ from typing import Any
 from game.sprites import *
 from game.constants import *
 
-def mainloop() -> None:
+def mainloop(no_music: bool) -> None:
     # --------------- 初始化 --------------- #
     # ---------- 变量初始化 ---------- #
     # ----- 窗口相关变量 ----- #
@@ -19,14 +19,15 @@ def mainloop() -> None:
     game_over: bool = False
 
     # ----- 图片 ----- #
-    icon: pygame.Surface = pygame.image.load(os.path.join("assets/image", "icon.ico"))
+    icon: pygame.Surface = pygame.image.load(os.path.join("assets/image", "manbo.png"))
     game_over_image: pygame.Surface = pygame.image.load(os.path.join("assets/image", "game_over.png"))
 
-    # ----- 音效 ----- #
+    # ----- 音乐和音效 ----- #
+    background_music: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "background_music.mp3"))
     steel_tube_thud_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "steel_tube_thud.wav"))
+    manbo_sound: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "manbo.wav"))
     played_steel_tube_thud_sound: bool = False
-
-    squeaky_toy: pygame.mixer.Sound = pygame.mixer.Sound(os.path.join("assets/sound", "squeaky_toy.wav"))
+    can_play_background_music: bool = True
 
     # ----- 字体 ----- #
     noto_sans_sc_black: pygame.font.Font = pygame.font.Font(os.path.join("assets/font", "NotoSansSC-Black.ttf"), 36)
@@ -57,6 +58,7 @@ def mainloop() -> None:
     players.add(player)
     score_keepers.add(score_keeper)
 
+
     # --------------- 真·主循环 --------------- #
     while running:
         window.fill(BLACK)
@@ -64,6 +66,14 @@ def mainloop() -> None:
         logging.debug(f"成功填充窗口背景颜色")
         clock.tick(FPS)
         logging.debug(f"成功设置帧率")
+
+        # ---------- 背景音乐播放 ---------- #
+        if not no_music:
+            if can_play_background_music:
+                background_music.play()
+                can_play_background_music = False
+            elif frame_counter % (FPS * (3 * 60 + 30)) == 0:
+                can_play_background_music = True
 
         # ---------- 事件检测 ---------- #
         for event in pygame.event.get():
@@ -119,7 +129,7 @@ def mainloop() -> None:
             if can_add_score:
                 score += 1
                 can_add_score = False
-                squeaky_toy.play()
+                manbo_sound.play()
         else:
             can_add_score = True
 
