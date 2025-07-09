@@ -3,9 +3,19 @@ __author__: str = "Kjulam"
 import os
 import pygame
 import logging
+import time
 from typing import Any
 from game.sprites import *
 from game.constants import *
+
+start_time: float = time.time()
+
+def get_execution_time() -> str:
+    elapsed_time: float = time.time() - start_time
+    elapsed_hours: str = str(int(elapsed_time // 3600)).zfill(2)
+    elapsed_minutes: str = str(int(elapsed_time % 3600 // 60)).zfill(2)
+    elapsed_seconds: str = str(int(elapsed_time % 60)).zfill(2)
+    return f"{elapsed_hours}:{elapsed_minutes}:{elapsed_seconds}"
 
 def mainloop(no_music: bool) -> None:
     # --------------- 初始化 --------------- #
@@ -37,9 +47,7 @@ def mainloop(no_music: bool) -> None:
     noto_sans_sc_black: pygame.font.Font = pygame.font.Font(os.path.join("assets/font", "NotoSansSC-Black.ttf"), 36)
     score_surface: pygame.Surface = noto_sans_sc_black.render(f"分数：{score}", True, WHITE)
 
-    # ---------- 设置窗口标题和图标 ---------- #
-    pygame.display.set_caption(TITLE)
-    logging.debug(f"成功设置窗口标题为 \"{TITLE}\"")
+    # ---------- 设置窗口图标 ---------- #
     pygame.display.set_icon(icon)
     logging.debug("成功设置窗口图标")
 
@@ -64,6 +72,10 @@ def mainloop(no_music: bool) -> None:
 
     # --------------- 真·主循环 --------------- #
     while running:
+        # ---------- 更新窗口标题 ---------- #
+        pygame.display.set_caption(f"{TITLE} - 游玩时间：{get_execution_time()}")
+
+        # ---------- ---------- ---------- #
         window.fill(BLACK)
         window.blit(score_surface, (50, 50))
         logging.debug(f"成功填充窗口背景颜色")
