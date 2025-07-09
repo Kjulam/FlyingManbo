@@ -16,8 +16,8 @@ def main() -> int:
 
         parser: argparse.ArgumentParser = argparse.ArgumentParser()
         parser.add_argument("-nm", "--no-music", help="关闭音乐运行", action="store_true")
-        args: argparse.Namespace = parser.parse_args()
-        no_music: bool = args.no_music
+        arguments: argparse.Namespace = parser.parse_args()
+        no_music: bool = arguments.no_music
 
         pygame.init()
         pygame.mixer.init()
@@ -37,4 +37,6 @@ def main() -> int:
     return 0
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit_code: int = main()
+    logging.info(f"程序已退出，退出代码为 {exit_code}")
+    sys.exit(exit_code)
