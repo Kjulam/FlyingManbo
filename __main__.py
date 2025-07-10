@@ -1,4 +1,5 @@
 __author__: str = "Kjulam"
+__version__: str = "1.0.1"
 
 import sys
 import pygame
@@ -16,8 +17,14 @@ def main() -> int:
 
         parser: argparse.ArgumentParser = argparse.ArgumentParser()
         parser.add_argument("-nm", "--no-music", help="关闭音乐运行", action="store_true")
+        parser.add_argument("-v", "--version", help="获取游戏版本", action="store_true")
         arguments: argparse.Namespace = parser.parse_args()
         no_music: bool = arguments.no_music
+        version: bool = arguments.version
+
+        if version:
+            print(f"FlyingManbo version {__version__} by {__author__}")
+            return 0
 
         pygame.init()
         pygame.mixer.init()
