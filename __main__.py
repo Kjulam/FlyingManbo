@@ -7,7 +7,7 @@ import logging
 import argparse
 import game
 
-def main() -> int:
+def main() -> int | None:
     try:
         logging.basicConfig(
             level=logging.INFO,
@@ -44,6 +44,8 @@ def main() -> int:
     return 0
 
 if __name__ == '__main__':
-    exit_code: int = main()
+    exit_code: int | None = main()
+    if exit_code is None:
+        exit_code = 0
     logging.info(f"程序已退出，退出代码为 {exit_code}")
     sys.exit(exit_code)
