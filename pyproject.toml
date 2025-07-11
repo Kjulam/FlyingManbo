@@ -1,7 +1,7 @@
 [project]
-name = "FlyingManbo"
+name = "flyingmanbo"
 version = "1.0.1"
-description = "A game called FlyingManbo by Kjulam"
+description = "FlyingManbo by Kjulam"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -9,4 +9,4 @@ dependencies = [
 ]
 
 [project.scripts]
-flying-manbo = "__main__:main"
+flyingmanbo = "__main__:main"
