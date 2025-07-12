@@ -1,5 +1,5 @@
 __author__: str = "Kjulam"
-__version__: str = "1.0.1"
+__version__: str = "25.7.12"
 
 import sys
 import pygame
